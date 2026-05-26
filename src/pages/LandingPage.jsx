@@ -138,6 +138,7 @@ function LandingPage({ onSuccess, validateStudentId }) {
                             placeholder="22-00164JUM"
                             onChange={(e) => setStudentId(e.target.value)}
                             className={`input ${error ? "input-error" : ""}`}
+                            autoFocus
                         />
 
                         {/* 🚀 LOGIN BUTTON (Refactored for strict production form binding) */}
