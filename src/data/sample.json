@@ -1,0 +1,57 @@
+{
+  "studentIdHash": "9f3a1c88b2d1e7c0a6f4b9d2c1e8a0f3",
+
+  "meta": {
+    "title": "An Unsent Message",
+    "theme": "nostalgic",
+    "music": "piano_01.mp3",
+    "createdAt": "2026-05-22"
+  },
+
+  "scenes": [
+    {
+      "text": "I almost told you everything...",
+      "speed": 60,
+      "wait": 1500,
+      "color": "#ffffff",
+      "emoji": "💭",
+      "particles": "soft",
+      "emotion": "hesitation"
+    },
+
+    {
+      "text": "But I stopped myself halfway.",
+      "speed": 55,
+      "wait": 2000,
+      "color": "#ffd166",
+      "emoji": "😶",
+      "particles": "dust",
+      "emotion": "regret"
+    },
+
+    {
+      "text": "Maybe silence was easier than honesty.",
+      "speed": 65,
+      "wait": 2500,
+      "color": "#8ab4ff",
+      "emoji": "💙",
+      "particles": "rain",
+      "emotion": "sadness"
+    },
+
+    {
+      "text": "But I still think about what I didn’t say.",
+      "speed": 70,
+      "wait": 3000,
+      "color": "#ff6b6b",
+      "emoji": "🫠",
+      "particles": "slow",
+      "emotion": "reflection"
+    }
+  ],
+
+  "end": {
+    "text": "— end of message —",
+    "color": "#aaaaaa"
+  }
+}
