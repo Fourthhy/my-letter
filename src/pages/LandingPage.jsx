@@ -35,15 +35,15 @@ function LandingPage({ onSuccess, validateStudentId }) {
     // 🧪 ENCRYPT TOOL (DEV)
     // ===============================
     const handleEncrypt = () => {
-        const cleanId = studentId.trim().toUpperCase();
-        if (!cleanId) {
+        if (!studentId.trim()) {
             console.log("⚠️ No input to encrypt.");
             return;
         }
 
-        const encrypted = encryptText(cleanId);
+        const encrypted = encryptText(studentId.trim());
+
         console.log("========== AES ENCRYPT ==========");
-        console.log("Original:", cleanId);
+        console.log("Original:", studentId.trim());
         console.log("Encrypted:", encrypted);
         console.log("=================================");
     };
@@ -58,8 +58,9 @@ function LandingPage({ onSuccess, validateStudentId }) {
         }
 
         const decrypted = decryptText(studentId.trim());
+
         console.log("========== AES DECRYPT ==========");
-        console.log("Input:", studentId);
+        console.log("Input:", studentId.trim());
         console.log("Decrypted:", decrypted || "❌ Invalid data or key");
         console.log("=================================");
     };
@@ -68,15 +69,15 @@ function LandingPage({ onSuccess, validateStudentId }) {
     // 🧪 HASH TOOL (NEW)
     // ===============================
     const handleHash = () => {
-        const cleanId = studentId.trim().toUpperCase();
-        if (!cleanId) {
+        if (!studentId.trim()) {
             console.log("⚠️ No input to hash.");
             return;
         }
 
-        const hashed = hashText(cleanId);
+        const hashed = hashText(studentId.trim());
+
         console.log("========== SHA-256 HASH ==========");
-        console.log("Original:", cleanId);
+        console.log("Original:", studentId.trim());
         console.log("Hashed (filename safe):", hashed);
         console.log("Example file path:");
         console.log(`/data/${hashed}.json`);
@@ -87,13 +88,12 @@ function LandingPage({ onSuccess, validateStudentId }) {
     // 🎬 LOGIN FLOW
     // ===============================
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Stifles the native HTML page reload behavior
+
         setError("");
+        const sanitizedId = studentId.trim();
 
-        // Normalize input: remove trailing spaces and make it UPPERCASE
-        const cleanStudentId = studentId.trim().toUpperCase();
-
-        if (!cleanStudentId) {
+        if (!sanitizedId) {
             setError("Please enter your Student ID.");
             return;
         }
@@ -101,8 +101,8 @@ function LandingPage({ onSuccess, validateStudentId }) {
         setLoading(true);
 
         setTimeout(() => {
-            // Validate the pristine, normalized ID against your keys
-            const exists = validateStudentId(cleanStudentId);
+            // Case-insensitive matching logic support
+            const exists = validateStudentId(sanitizedId);
 
             if (!exists) {
                 setError("Student ID not found.");
@@ -111,7 +111,7 @@ function LandingPage({ onSuccess, validateStudentId }) {
             }
 
             setLoading(false);
-            onSuccess(cleanStudentId); // Pass the matching ID back to App.jsx
+            onSuccess(sanitizedId);
         }, 1200);
     };
 
@@ -124,6 +124,7 @@ function LandingPage({ onSuccess, validateStudentId }) {
 
             <div className="container">
                 <div className="card">
+
                     <h1 className="title">{titleMessage}</h1>
 
                     <p className="subtitle">
@@ -139,8 +140,8 @@ function LandingPage({ onSuccess, validateStudentId }) {
                             className={`input ${error ? "input-error" : ""}`}
                         />
 
-                        {/* 🚀 LOGIN */}
-                        <button className="button" type="submit" disabled={loading}>
+                        {/* 🚀 LOGIN BUTTON (Refactored for strict production form binding) */}
+                        <button type="submit" className="button" disabled={loading}>
                             {loading ? "Verifying..." : "Enter"}
                         </button>
                     </form>
