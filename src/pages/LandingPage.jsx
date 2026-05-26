@@ -35,15 +35,15 @@ function LandingPage({ onSuccess, validateStudentId }) {
     // 🧪 ENCRYPT TOOL (DEV)
     // ===============================
     const handleEncrypt = () => {
-        if (!studentId.trim()) {
+        const cleanId = studentId.trim().toUpperCase();
+        if (!cleanId) {
             console.log("⚠️ No input to encrypt.");
             return;
         }
 
-        const encrypted = encryptText(studentId);
-
+        const encrypted = encryptText(cleanId);
         console.log("========== AES ENCRYPT ==========");
-        console.log("Original:", studentId);
+        console.log("Original:", cleanId);
         console.log("Encrypted:", encrypted);
         console.log("=================================");
     };
@@ -57,8 +57,7 @@ function LandingPage({ onSuccess, validateStudentId }) {
             return;
         }
 
-        const decrypted = decryptText(studentId);
-
+        const decrypted = decryptText(studentId.trim());
         console.log("========== AES DECRYPT ==========");
         console.log("Input:", studentId);
         console.log("Decrypted:", decrypted || "❌ Invalid data or key");
@@ -69,15 +68,15 @@ function LandingPage({ onSuccess, validateStudentId }) {
     // 🧪 HASH TOOL (NEW)
     // ===============================
     const handleHash = () => {
-        if (!studentId.trim()) {
+        const cleanId = studentId.trim().toUpperCase();
+        if (!cleanId) {
             console.log("⚠️ No input to hash.");
             return;
         }
 
-        const hashed = hashText(studentId);
-
+        const hashed = hashText(cleanId);
         console.log("========== SHA-256 HASH ==========");
-        console.log("Original:", studentId);
+        console.log("Original:", cleanId);
         console.log("Hashed (filename safe):", hashed);
         console.log("Example file path:");
         console.log(`/data/${hashed}.json`);
@@ -89,10 +88,12 @@ function LandingPage({ onSuccess, validateStudentId }) {
     // ===============================
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         setError("");
 
-        if (!studentId.trim()) {
+        // Normalize input: remove trailing spaces and make it UPPERCASE
+        const cleanStudentId = studentId.trim().toUpperCase();
+
+        if (!cleanStudentId) {
             setError("Please enter your Student ID.");
             return;
         }
@@ -100,7 +101,8 @@ function LandingPage({ onSuccess, validateStudentId }) {
         setLoading(true);
 
         setTimeout(() => {
-            const exists = validateStudentId(studentId);
+            // Validate the pristine, normalized ID against your keys
+            const exists = validateStudentId(cleanStudentId);
 
             if (!exists) {
                 setError("Student ID not found.");
@@ -109,7 +111,7 @@ function LandingPage({ onSuccess, validateStudentId }) {
             }
 
             setLoading(false);
-            onSuccess(studentId);
+            onSuccess(cleanStudentId); // Pass the matching ID back to App.jsx
         }, 1200);
     };
 
@@ -122,7 +124,6 @@ function LandingPage({ onSuccess, validateStudentId }) {
 
             <div className="container">
                 <div className="card">
-
                     <h1 className="title">{titleMessage}</h1>
 
                     <p className="subtitle">
@@ -139,7 +140,7 @@ function LandingPage({ onSuccess, validateStudentId }) {
                         />
 
                         {/* 🚀 LOGIN */}
-                        <button className="button" disabled={loading}>
+                        <button className="button" type="submit" disabled={loading}>
                             {loading ? "Verifying..." : "Enter"}
                         </button>
                     </form>
