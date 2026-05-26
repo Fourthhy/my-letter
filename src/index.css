@@ -1,50 +1,79 @@
 /* =========================================
    BASE STYLES (Mobile First)
 ========================================= */
+
 body {
   margin: 0;
   font-family: "Georgia", serif;
   background: radial-gradient(circle at top, #1a1a1a, #0b0b0b);
   color: white;
-  /* Changed from height to min-height to allow scrolling if content overflows */
-  min-height: 100vh; 
+
+  min-height: 100vh;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  /* MOBILE INPUT FIX */
+  overflow-x: hidden;
+
+  /* Prevent weird mobile tap highlights */
+  -webkit-tap-highlight-color: transparent;
 }
 
 .app-wrapper {
   position: relative;
   width: 100%;
+
   min-height: 100vh;
+
   display: flex;
   align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
 }
 
 .container {
   width: 100%;
-  padding: 15px; /* Smaller padding for mobile screens */
+  padding: 15px;
+
   display: flex;
   justify-content: center;
-  box-sizing: border-box; /* Prevents padding from breaking 100% width */
+
+  box-sizing: border-box;
+
+  /* IMPORTANT */
+  position: relative;
+  z-index: 5;
 }
 
 .card {
   width: 100%;
   max-width: 420px;
+
   text-align: center;
-  padding: 30px 20px; /* Reduced padding to save screen space on mobile */
+
+  padding: 30px 20px;
+
   border-radius: 16px;
+
   background: rgba(255, 255, 255, 0.04);
+
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px); /* Added for Safari support */
+  -webkit-backdrop-filter: blur(10px);
+
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+
   box-sizing: border-box;
+
+  /* IMPORTANT */
+  position: relative;
+  z-index: 10;
 }
 
 .title {
-  /* Clamp works great across all devices! */
-  font-size: clamp(1.8rem, 5vw, 2.4rem); 
+  font-size: clamp(1.8rem, 5vw, 2.4rem);
   margin-bottom: 10px;
 }
 
@@ -60,15 +89,41 @@ body {
   gap: 12px;
 }
 
+/* =========================================
+   INPUT FIXES
+========================================= */
+
 .input {
+  width: 100%;
+
   padding: 12px 14px;
+
   border-radius: 10px;
+
   border: 1px solid rgba(255, 255, 255, 0.15);
+
   background: rgba(0, 0, 0, 0.3);
+
   color: white;
+
   outline: none;
-  font-size: 1rem;
+
+  font-size: 16px;
+
   transition: all 0.2s ease-in-out;
+
+  box-sizing: border-box;
+
+  /* IMPORTANT MOBILE FIXES */
+  position: relative;
+  z-index: 20;
+
+  pointer-events: auto;
+
+  -webkit-appearance: none;
+  appearance: none;
+
+  touch-action: manipulation;
 }
 
 .input:focus {
@@ -82,16 +137,25 @@ body {
 
 .button {
   padding: 12px;
+
   border: none;
+
   border-radius: 10px;
+
   background: #6ea8ff;
+
   color: black;
+
   font-weight: bold;
+
   cursor: pointer;
+
   transition: all 0.2s ease-in-out;
+
+  position: relative;
+  z-index: 20;
 }
 
-/* Hover effects are generally disabled/ignored on touch devices */
 .button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
@@ -104,32 +168,33 @@ body {
 }
 
 /* =========================================
-   TABLET STYLES (768px and up)
+   TABLET STYLES
 ========================================= */
+
 @media screen and (min-width: 768px) {
   .container {
-    padding: 30px; 
+    padding: 30px;
   }
 
   .card {
-    padding: 40px 30px; /* Restored original padding for larger screens */
-    max-width: 450px; /* Slightly wider for tablet breathing room */
+    padding: 40px 30px;
+    max-width: 450px;
   }
 }
 
 /* =========================================
-   DESKTOP STYLES (1024px and up)
+   DESKTOP STYLES
 ========================================= */
+
 @media screen and (min-width: 1024px) {
   body {
-    overflow: hidden; /* Safe to lock scrolling on desktop where height is guaranteed */
+    overflow: hidden;
   }
 
   .card {
-    max-width: 480px; /* Optimal width for desktop viewing */
+    max-width: 480px;
   }
 
-  /* Enhanced hover states exclusively for mouse-pointer devices */
   .button:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(110, 168, 255, 0.3);
@@ -140,24 +205,32 @@ body {
    SCATTERED PARTICLES BACKGROUND
 ========================================= */
 
-/* Base setup for particles */
 .particles-layer-1,
 .particles-layer-2 {
   position: fixed;
+
   top: 0;
   left: 0;
+
+  width: 100vw;
+  height: 100vh;
+
   border-radius: 50%;
+
   background: transparent;
-  pointer-events: none; /* Prevents particles from blocking clicks */
-  z-index: -1; /* Keeps them behind your card */
+
+  /* VERY IMPORTANT */
+  pointer-events: none !important;
+
+  z-index: 0;
 }
 
-/* Layer 1: Larger, slightly faster particles */
+/* Layer 1 */
 .particles-layer-1 {
   width: 3px;
   height: 3px;
-  /* Plotted across the full width (vw) and height (vh) */
-  box-shadow: 
+
+  box-shadow:
     15vw 10vh rgba(255, 255, 255, 0.8),
     85vw 20vh rgba(255, 255, 255, 0.6),
     50vw 50vh rgba(255, 255, 255, 0.9),
@@ -173,15 +246,16 @@ body {
     90vw 35vh rgba(255, 255, 255, 0.8),
     60vw 85vh rgba(255, 255, 255, 0.5),
     35vw 90vh rgba(255, 255, 255, 0.9);
+
   animation: driftUp 40s linear infinite;
 }
 
-/* Layer 2: Smaller, slower particles for a 3D parallax effect */
+/* Layer 2 */
 .particles-layer-2 {
   width: 1.5px;
   height: 1.5px;
-  /* Entirely different coordinates to fill in the gaps */
-  box-shadow: 
+
+  box-shadow:
     25vw 15vh rgba(255, 255, 255, 0.5),
     70vw 35vh rgba(255, 255, 255, 0.4),
     15vw 65vh rgba(255, 255, 255, 0.6),
@@ -197,23 +271,31 @@ body {
     40vw 35vh rgba(255, 255, 255, 0.5),
     60vw 65vh rgba(255, 255, 255, 0.4),
     10vw 50vh rgba(255, 255, 255, 0.6);
+
   animation: driftUp 60s linear infinite;
 }
 
-/* Subtle animation to make them drift upward */
+/* =========================================
+   PARTICLE ANIMATION
+========================================= */
+
 @keyframes driftUp {
   0% {
     transform: translateY(0) translateX(0);
   }
+
   50% {
-    /* Slight sway to the side */
-    transform: translateY(-50vh) translateX(2vw); 
+    transform: translateY(-50vh) translateX(2vw);
   }
+
   100% {
-    /* Drifts up a full screen height */
-    transform: translateY(-100vh) translateX(0); 
+    transform: translateY(-100vh) translateX(0);
   }
 }
+
+/* =========================================
+   CURSOR
+========================================= */
 
 .cursor {
   display: inline-block;
@@ -228,49 +310,49 @@ body {
 }
 
 /* =========================================
-   STORY MODE TEXT STYLES (Viewport Strict)
+   STORY MODE
 ========================================= */
 
-/* The outer container: Locks to the exact center of the screen */
 .story-container {
-  position: fixed; /* Fixed is more aggressive than absolute for screen-centering */
+  position: fixed;
+
   top: 0;
   left: 0;
+
   width: 100vw;
   height: 100vh;
+
   display: flex;
+
   justify-content: center;
   align-items: center;
+
   z-index: 10;
-  pointer-events: none; /* Prevents this layer from blocking clicks on the background */
+
+  pointer-events: none;
 }
 
-/* The text wrapper: Uses vw to dictate horizontal spread */
 .story-text-wrapper {
-  /* Mobile: Takes up 90% of the screen width */
-  width: 90vw; 
+  width: 90vw;
+
   text-align: center;
+
   font-size: 1.1rem;
-  
-  /* Forces text to behave if it tries to overflow */
+
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
 
-/* Tablet (768px and up) */
 @media screen and (min-width: 768px) {
   .story-text-wrapper {
-    /* Tablet: Slightly tighter to keep reading comfortable */
     width: 80vw;
-    font-size: 1.4rem; 
+    font-size: 1.4rem;
   }
 }
 
-/* Desktop (1024px and up) */
 @media screen and (min-width: 1024px) {
   .story-text-wrapper {
-    /* Desktop: Beautiful, wide cinematic flow */
-    width: 65vw; 
-    font-size: 1.8rem; 
+    width: 65vw;
+    font-size: 1.8rem;
   }
 }
