@@ -133,6 +133,7 @@ function LandingPage({ onSuccess, validateStudentId }) {
                         <input
                             type="text"
                             value={studentId}
+                            placeholder="22-00164JUM"
                             onChange={(e) => setStudentId(e.target.value)}
                             className={`input ${error ? "input-error" : ""}`}
                         />
