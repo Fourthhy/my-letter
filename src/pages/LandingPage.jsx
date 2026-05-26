@@ -66,7 +66,7 @@ function LandingPage({ onSuccess, validateStudentId }) {
     };
 
     // ===============================
-    // 🧪 HASH TOOL (NEW)
+    // 🧪 HASH TOOL
     // ===============================
     const handleHash = () => {
         if (!studentId.trim()) {
@@ -88,9 +88,10 @@ function LandingPage({ onSuccess, validateStudentId }) {
     // 🎬 LOGIN FLOW
     // ===============================
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Stifles the native HTML page reload behavior
+        e.preventDefault();
 
         setError("");
+
         const sanitizedId = studentId.trim();
 
         if (!sanitizedId) {
@@ -101,7 +102,6 @@ function LandingPage({ onSuccess, validateStudentId }) {
         setLoading(true);
 
         setTimeout(() => {
-            // Case-insensitive matching logic support
             const exists = validateStudentId(sanitizedId);
 
             if (!exists) {
@@ -119,6 +119,7 @@ function LandingPage({ onSuccess, validateStudentId }) {
 
     return (
         <>
+            {/* PARTICLE BACKGROUNDS */}
             <div className="particles-layer-1"></div>
             <div className="particles-layer-2"></div>
 
@@ -138,16 +139,49 @@ function LandingPage({ onSuccess, validateStudentId }) {
                             placeholder="22-00164JUM"
                             onChange={(e) => setStudentId(e.target.value)}
                             className={`input ${error ? "input-error" : ""}`}
-                            autoFocus
+                            autoComplete="off"
+                            autoCorrect="off"
+                            spellCheck={false}
                         />
 
-                        {/* 🚀 LOGIN BUTTON (Refactored for strict production form binding) */}
-                        <button type="submit" className="button" disabled={loading}>
+                        <button
+                            type="submit"
+                            className="button"
+                            disabled={loading}
+                        >
                             {loading ? "Verifying..." : "Enter"}
                         </button>
                     </form>
 
                     {error && <p className="error">{error}</p>}
+
+                    {/* DEV TOOLS */}
+                    {/* <div className="dev-tools">
+                        <button
+                            type="button"
+                            onClick={handleEncrypt}
+                            className="dev-button"
+                        >
+                            Encrypt
+                        </button>
+
+                        <button
+                            type="button"
+                            onClick={handleDecrypt}
+                            className="dev-button"
+                        >
+                            Decrypt
+                        </button>
+
+                        <button
+                            type="button"
+                            onClick={handleHash}
+                            className="dev-button"
+                        >
+                            Hash
+                        </button>
+                    </div> */}
+
                 </div>
             </div>
         </>
